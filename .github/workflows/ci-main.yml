@@ -35,7 +35,7 @@ jobs:
           echo "status=success" >> $GITHUB_OUTPUT
 
   post_summary:
-    uses: ./github/workflows/reusable-ci-summary.yml
+    uses: ./github/workflows/reusable-ci-summary.yml@main
     needs: build
     with:
       status: ${{ needs.build.outputs.status }}
