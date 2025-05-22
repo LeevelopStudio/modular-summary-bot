@@ -1,5 +1,5 @@
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone
 import os
 
 parser = argparse.ArgumentParser()
@@ -44,7 +44,7 @@ for log_name in ["build.log", "test.log"]:
             content = f.read()[-1500] # Last ~1500 chars
         md += f"<details>\n<summary>{log_name}</summary>\n\n```bash\n{content}\n```\n</details>\n\n"
 
-md += f"> _Generated on {datetime.now(datetime.timezone.utc)} UTC_"
+md += f"> _Generated on {datetime.now(timezone.utc).isoformat()} UTC_"
 
 with open("ci-summary.md", "w") as f:
     f.write(md)
