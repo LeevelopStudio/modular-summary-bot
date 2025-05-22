@@ -10,13 +10,13 @@ on:
         type: string
       tests_passed:
         required: true
-        type: number
+        type: string
       tests_failed:
         required: true
-        type: number
+        type: string
       coverage:
         required: true
-        type: number
+        type: string
 
 jobs:
   generate-and-post:
