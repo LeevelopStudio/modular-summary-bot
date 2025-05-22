@@ -1,0 +1,44 @@
+# .github/workflows/ci-main.yml
+
+name: Example CI Pipeline
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      tests_passed: ${{ steps.export.outputs.tests_passed }}
+      tests_failed: ${{ steps.export.outputs.tests_failed }}
+      coverage: ${{ steps.export.outputs.coverage }}
+      status: ${{ steps.export.outputs.status }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Simulate build
+        run: echo "build completed successfully" > build.log
+
+      - name: Simulate tests
+        run: echo "120 tests run, 0 failed" > test.log
+
+      - name: Extract test results
+        id: export
+        run: |
+          # Simulate parsing real results
+          echo "tests_passed=120" >> $GITHUB_OUTPUT
+          echo "tests_failed=2" >> $GITHUB_OUTPUT
+          echo "coverage=91.4" >> $GITHUB_OUTPUT
+          echo "status=success" >> $GITHUB_OUTPUT
+
+  post_summary:
+    uses: ./github/workflows/reusable-ci-summary.yml
+    needs: build
+    with:
+      status: ${{ needs.build.outputs.status }}
+      tests_passed: ${{ needs.build.outputs.tests_passed }}
+      tests_failed: ${{ needs.build.outputs.tests_failed }}
+      coverage: ${{ needs.build.outputs.coverage }}
