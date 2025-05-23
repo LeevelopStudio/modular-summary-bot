@@ -65,6 +65,9 @@ jobs:
             --duration ${{ steps.timing.outputs.duration }} \
             --artifacts_url "${{ steps.artifact_url.outputs.url }}"
 
+      - name: Debug Actor
+        run: echo "Actor is ${{ github.actor }} and token is set = ${{ secrets.BOT_PAT != '' }}"
+
       - name: Post or Update PR Comment
         uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
